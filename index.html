@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agents That Hold the Money · HASHIRU v2</title>
-<meta name="description" content="HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given. A whitepaper by Kunal Pai and Harshil Patel, November 2026.">
+<meta name="description" content="HASHIRU v2 gives teams of AI agents a budget to hire models and other agents, and keeps them within it. A whitepaper by Kunal Pai and Harshil Patel, November 2026.">
 <link rel="canonical" href="https://hashiru-ai.github.io/hashiru-website/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="HASHIRU">
 <meta property="og:title" content="Agents That Hold the Money">
-<meta property="og:description" content="HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given. Over 551 live hires, none spent more than 1.11 times its reservation.">
+<meta property="og:description" content="HASHIRU v2 gives teams of AI agents a budget to hire models and other agents, and keeps them within it. Across 551 live hires, none spent more than 1.11 times its budget.">
 <meta property="og:url" content="https://hashiru-ai.github.io/hashiru-website/">
 <meta property="og:image" content="https://hashiru-ai.github.io/hashiru-website/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -306,10 +306,10 @@
     <div class="hero-copy">
       <p class="kicker">Whitepaper<span aria-hidden="true">•</span>November 2026</p>
       <h1>Agents That Hold the Money</h1>
-      <p class="sub">HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given.</p>
+      <p class="sub">HASHIRU v2 gives teams of AI agents a budget to hire models and other agents, and keeps them within it.</p>
       <p class="authors"><span><b>Kunal Pai</b>UCLA</span><span><b>Harshil Patel</b>UC Davis</span></p>
       <div class="cta">
-        <a class="btn primary" href="hashiru-v2-whitepaper.pdf">Read the whitepaper <small>PDF, 24 pages</small></a>
+        <a class="btn primary" href="hashiru-v2-whitepaper.pdf">Read the whitepaper <small>PDF, 25 pages</small></a>
         <a class="btn ghost" href="https://github.com/HASHIRU-AI/HASHIRU">Code on GitHub</a>
       </div>
     </div>
@@ -319,17 +319,17 @@
         <span>trace <b>·</b> one hire of muse-spark-1.3</span>
         <button type="button" id="replay" aria-label="Replay the trace">replay</button>
       </div>
-      <div class="pool" aria-hidden="true"><span>pool</span><div class="pool-track"><div class="pool-fill"></div></div><span>$0.005 reserved</span></div>
+      <div class="pool" aria-hidden="true"><span>budget</span><div class="pool-track"><div class="pool-fill"></div></div><span>$0.005 given</span></div>
       <ol class="rows">
-        <li class="head" aria-hidden="true"><span>event</span><span class="what">what the hub does</span><span class="amt">amount</span><span class="bal">pool</span></li>
-        <li style="--i:0"><span class="ev">hire</span><span class="what">The CEO hires the model and reserves its pool</span><span class="amt">$0.0050</span><span class="bal">0.0050</span></li>
-        <li style="--i:1"><span class="ev">call</span><span class="what">Output capped to what the hire holds</span><span class="amt">·</span><span class="bal">0.0050</span></li>
+        <li class="head" aria-hidden="true"><span>event</span><span class="what">what the hub does</span><span class="amt">amount</span><span class="bal">left</span></li>
+        <li style="--i:0"><span class="ev">hire</span><span class="what">The CEO hires the model and gives it a budget</span><span class="amt">$0.0050</span><span class="bal">0.0050</span></li>
+        <li style="--i:1"><span class="ev">call</span><span class="what">Output capped at what the hire has left</span><span class="amt">·</span><span class="bal">0.0050</span></li>
         <li style="--i:2"><span class="ev">billed</span><span class="what">The provider replies</span><span class="amt">−$0.0046</span><span class="bal">0.0004</span></li>
-        <li class="refused" style="--i:3"><span class="ev">refused</span><span class="what">Next call stopped before the provider: a short answer costs about $0.0011, reserve more</span><span class="amt">$0</span><span class="bal">0.0004</span></li>
-        <li style="--i:4"><span class="ev">answer</span><span class="what">Closing turn, the hire answers with what it has</span><span class="amt">·</span><span class="bal">0.0004</span></li>
+        <li class="refused" style="--i:3"><span class="ev">refused</span><span class="what">Next call stopped before the provider: a short answer costs about $0.0011, give more</span><span class="amt">$0</span><span class="bal">0.0004</span></li>
+        <li style="--i:4"><span class="ev">answer</span><span class="what">Last turn, the hire answers with what it has</span><span class="amt">·</span><span class="bal">0.0004</span></li>
         <li style="--i:5"><span class="ev">fire</span><span class="what">What was not spent goes back to the CEO</span><span class="amt">+$0.0004</span><span class="bal">0</span></li>
       </ol>
-      <figcaption>The median hire of the dear model in our runs. Nothing was spent past the pool, and the pool was set below the model's price, which is what v2 still gets most wrong.</figcaption>
+      <figcaption>The median hire of the expensive model in our runs. It never spent more than its budget, but the budget was smaller than the model's price, which is the main thing v2 still gets wrong.</figcaption>
     </figure>
   </div>
 </header>
@@ -337,23 +337,23 @@
 <main>
   <section class="wrap intro reveal" aria-label="Summary">
     <div class="lede">
-      <p>A team of language-model agents spends money every time it hires a strong cloud model for a hard step, a cheap one for an easy step, or an outside agent that sells an exact answer. HASHIRU v2 gives that money to the agents themselves. Each agent holds a pool reserved from its hirer's and spends it by hiring, over the open protocols agents and tools now share (A2A and MCP). The hub makes that spending safe. A call is bounded by what its agent holds before it is made, firing returns what was not spent, and an agent with one step left is made to answer.</p>
+      <p>A team of AI agents spends money every time it uses a model or another agent, and a strong cloud model costs more than a cheap one. HASHIRU v2 gives this money to the agents themselves. Each agent gets a budget from the agent that hired it and spends it by hiring models and other agents (over A2A and MCP). HASHIRU's runtime, the hub, keeps this safe. It caps every call at what the agent has left, returns unspent money when a hire is fired, and makes an agent on its last step answer.</p>
     </div>
     <div class="pillars">
       <article>
         <p class="eyebrow">The system</p>
-        <h3>An economy for agents</h3>
-        <p>Each agent holds a pool reserved from its hirer's and hires models and priced agents over A2A and MCP.</p>
+        <h3>Agents with their own budgets</h3>
+        <p>Each agent gets a budget from the agent that hired it, and spends it hiring models and other agents.</p>
       </article>
       <article>
         <p class="eyebrow">The guards</p>
-        <h3>Spending bounded by construction</h3>
-        <p>Each call is bounded by what its agent holds (as closely as the hub counts tokens), firing refunds what was not spent, and an agent with one step left must answer.</p>
+        <h3>Built-in spending limits</h3>
+        <p>Every call is capped at what its agent has left, unspent money comes back when a hire is fired, and an agent on its last step must answer.</p>
       </article>
       <article>
         <p class="eyebrow">The result</p>
-        <h3>Guards that hold</h3>
-        <p>Over 551 live hires, none spent more than 1.11 times its reservation, against 372 times as first built.</p>
+        <h3>Limits that hold</h3>
+        <p>Across 551 live hires, none spent more than 1.11 times its budget. The first version let one spend 372 times.</p>
       </article>
     </div>
   </section>
@@ -363,41 +363,41 @@
     <div class="stats">
       <div class="stat">
         <p class="big">1.11<span>×</span></p>
-        <p class="cap">The most any of 551 live hires (in 120 runs) spent against its reservation. As first built, HASHIRU let a hire spend 372 times its reservation and lost half its runs.</p>
+        <p class="cap">The most any of 551 live hires spent, as a multiple of its budget. The first version let a hire spend 372 times its budget and lost half its runs.</p>
       </div>
       <div class="stat">
         <p class="big">+0.136</p>
-        <p class="cap">Score gained by holding long inputs out of the CEO's context (0.463 to 0.599 of the value, 95% interval +0.067 to +0.216), with the CEO's own calls cut from 43% of the budget to 32%.</p>
+        <p class="cap">Score gained by keeping long documents away from the CEO agent (0.463 to 0.599 of the points, 95% interval +0.067 to +0.216). The CEO's own share of the spending fell from 43% to 32%.</p>
       </div>
       <div class="stat">
         <p class="big">79<span>%</span><em>vs</em>69<span>%</span></p>
-        <p class="cap">Right on hard jobs that a specialist in the market can do (62 of 78), against 54 of 78 for the cheap model alone.</p>
+        <p class="cap">Right on hard jobs where the market has a specialist (62 of 78), against 54 of 78 for the cheap model alone.</p>
       </div>
       <div class="stat">
         <p class="big">0.737<em>vs</em>0.740</p>
-        <p class="cap">Overall score against the cheap model alone. On the projects whose budget pays for the CEO, the agents score level with it, at 3.9 times its spend.</p>
+        <p class="cap">Overall score against the cheap model alone, on projects with enough budget to run the CEO. About the same, at 3.9 times the spend.</p>
       </div>
     </div>
     <div class="keybox">
       <h3>What still holds the agents back</h3>
-      <p>The agents pick the dear model (<code>muse-spark-1.3</code>) for hard jobs but fund it below its price. Its 79 hires took 55% of what the agents spent ($0.99 of $1.81) and returned 12 right answers, where its calibrated rate on hard jobs is 87 to 100%. The first fix on the roadmap is to quote that price when the hire is made, from the same statistics the hub already routes on.</p>
+      <p>The agents pick the expensive model (<code>muse-spark-1.3</code>) for hard jobs, but give it too little money. Its 79 hires took 55% of what the agents spent ($0.99 of $1.81) and got 12 answers right, though it got 87 to 100% of hard jobs right in our test runs. The first fix on our roadmap is to tell the agent the price when it hires, using numbers the hub already has.</p>
     </div>
   </section>
 
   <section id="budget" class="wrap reveal">
-    <header class="sec-head"><p class="num">02</p><h2>Allocating pays once the budget has room</h2></header>
-    <p class="lead">Replaying the outcome table at four budgets (no model calls) shows where an allocator can win. The cheap model alone scores 0.740 to 0.749 whatever the budget, since it has nothing to buy with the rest. The cascade, which adapts during the task as the agents do, trails it by 0.051 at the smallest budget and leads it by 0.133 at the largest (95% interval +0.078 to +0.192, ahead on 12 of 16 projects).</p>
+    <header class="sec-head"><p class="num">02</p><h2>Splitting the money pays off once the budget has room</h2></header>
+    <p class="lead">We re-scored our recorded results at four budget levels, with no new model calls. The cheap model alone scores 0.740 to 0.749 at every budget, because it has nothing to spend the extra money on. The cascade (try the cheap option first, move up when needed) adapts during the task, as the agents do. It is 0.051 behind the cheap model at the smallest budget and 0.133 ahead at the largest (95% interval +0.078 to +0.192, ahead on 12 of 16 projects).</p>
     <figure class="chart-card">
       <div class="legend" id="legend" aria-hidden="true"></div>
       <div class="chart" id="chart" tabindex="0" role="img"
-           aria-label="Line chart of score against budget. Every job on gpt-6-luna stays near 0.75 at every budget. The cascade rises from 0.696 to 0.882, the knapsack from 0.776 to 0.910, and every job on muse-spark-1.3 from 0.350 to 0.815. HASHIRU v2's agents, run live at a budget of 0.5, score 0.737."></div>
+           aria-label="Line chart of score against budget. Every job on gpt-6-luna stays near 0.75 at every budget. The cascade rises from 0.696 to 0.882, the knapsack from 0.776 to 0.910, and every job on muse-spark-1.3 from 0.350 to 0.815. HASHIRU v2's agents, run live at half of what the best answers cost, score 0.737."></div>
       <div class="tooltip" id="tip" hidden></div>
-      <figcaption>Scores on the sixteen projects whose budget is at least $0.006, as the budget grows eightfold (τ is the budget as a multiple of what the best answers cost), replayed from the outcome table with three runs per project. The agents ran live at τ = 0.5 only (ringed), so the sweep shows where an allocator can win, not that the agents do.</figcaption>
+      <figcaption>Scores on the sixteen projects with a budget of at least $0.006. The budget is shown as a multiple of what the best answers cost. Each point is re-scored from recorded results (three runs per project). We ran the agents live only at 0.5× (ringed), so this shows where a strategy can win, not that our agents do.</figcaption>
       <details>
         <summary>Show the numbers</summary>
         <div class="table-scroll">
           <table>
-            <thead><tr><th scope="col">Allocator</th><th scope="col">τ = 0.25</th><th scope="col">τ = 0.5</th><th scope="col">τ = 1</th><th scope="col">τ = 2</th></tr></thead>
+            <thead><tr><th scope="col">Strategy</th><th scope="col">0.25×</th><th scope="col">0.5×</th><th scope="col">1×</th><th scope="col">2×</th></tr></thead>
             <tbody>
               <tr><td>Mean budget a project</td><td class="n">$0.036</td><td class="n">$0.072</td><td class="n">$0.144</td><td class="n">$0.288</td></tr>
               <tr><td>Every job on <code>gpt-6-luna</code></td><td class="n">0.747</td><td class="n">0.740</td><td class="n">0.748</td><td class="n">0.749</td></tr>
@@ -406,7 +406,7 @@
               <tr><td>Equal split</td><td class="n">0.748</td><td class="n">0.761</td><td class="n">0.791</td><td class="n">0.808</td></tr>
               <tr><td>Cascade (adapts during the task)</td><td class="n">0.696</td><td class="n">0.712</td><td class="n">0.783</td><td class="n">0.882</td></tr>
               <tr><td>Knapsack (plans up front)</td><td class="n">0.776</td><td class="n">0.817</td><td class="n">0.826</td><td class="n">0.910</td></tr>
-              <tr><td>Oracle (knows the outcomes)</td><td class="n">0.825</td><td class="n">0.838</td><td class="n">0.844</td><td class="n">0.947</td></tr>
+              <tr><td>Oracle (knows every answer in advance)</td><td class="n">0.825</td><td class="n">0.838</td><td class="n">0.844</td><td class="n">0.947</td></tr>
               <tr class="agents"><td>HASHIRU v2 agents (live)</td><td></td><td class="n">0.737</td><td></td><td></td></tr>
               <tr class="diff"><td>Cascade minus <code>gpt-6-luna</code></td><td class="n">−0.051</td><td class="n">−0.028</td><td class="n">+0.035</td><td class="n">+0.133</td></tr>
               <tr class="ci"><td>95% interval over projects</td><td class="n">[−0.108, +0.004]</td><td class="n">[−0.088, +0.031]</td><td class="n">[−0.036, +0.100]</td><td class="n">[+0.078, +0.192]</td></tr>
@@ -421,13 +421,13 @@
     <header class="sec-head"><p class="num">03</p><h2>Give a team a budget</h2></header>
     <div class="team-grid">
       <div>
-        <p>A team is one YAML file and one command. This one sets up the market of the whitepaper's evaluation (three cloud models, a priced logic-grid solver over A2A, and calibrated rates for level-5 arithmetic).</p>
-        <p>Every request then gets a CEO with a pool of <code>budget_usd</code>, the process stops at <code>max_usd</code>, and the trace records every reservation, call and refund.</p>
+        <p>A team is one YAML file and one command. This file sets up the market from our evaluation, with three cloud models, a paid logic-grid solver reached over A2A, and measured success rates for level-5 arithmetic.</p>
+        <p>Every request then gets a CEO with a budget of <code>budget_usd</code>, the whole process stops at <code>max_usd</code>, and the log records every payment, call and refund.</p>
       </div>
 <pre class="code"><span class="c"># team.yaml</span>
 <span class="k">ceo_model</span>: gpt-6-luna
 <span class="k">models</span>: [gpt-5-nano, gpt-6-luna, meta/muse-spark-1.3]
-<span class="k">budget_usd</span>: 0.10              <span class="c"># the CEO's pool for each request</span>
+<span class="k">budget_usd</span>: 0.10              <span class="c"># the CEO's budget for each request</span>
 <span class="k">max_usd</span>: 5.00                 <span class="c"># real spend, for the whole process</span>
 <span class="k">request_by_reference</span>: true    <span class="c"># long sections stay out of the CEO's context</span>
 <span class="k">a2a_peers</span>:
@@ -443,20 +443,20 @@
 
   <section id="use" class="wrap reveal">
     <header class="sec-head"><p class="num">04</p><h2>When to use HASHIRU v2 today</h2></header>
-    <p class="lead">Five rules of thumb from our runs, each scoped to the market we measured.</p>
+    <p class="lead">Five rules of thumb from our runs, each limited to the market we measured.</p>
     <ol class="rules">
-      <li><h3>A hard spending limit</h3><p>Use HASHIRU when a team must stay inside its money. Every hire stayed within 1.11 times its reservation, where the same agents without the call bound overran one by 372 times.</p></li>
-      <li><h3>Hard jobs that a specialist can do</h3><p>Hire through HASHIRU when the market sells an exact answer. On hard arithmetic and logic grids, the agents were right 79% of the time, against 69% for the cheap model alone.</p></li>
-      <li><h3>A budget that cannot pay for the dear model</h3><p>Expect the cheap model's score at a higher spend. At the budgets we ran, the agents scored level with <code>gpt-6-luna</code> alone (0.737 against 0.740) at 3.9 times its spend.</p></li>
-      <li><h3>A very small budget</h3><p>Below about $0.006 a project, send each job to one cheap model. A CEO that pays for each turn spent the budget before it answered (0.046 against 0.724).</p></li>
-      <li><h3>A budget with room</h3><p>Allocate rather than fix one model. In replay, the cheap model alone stayed near 0.75 as the budget grew eightfold while the cascade reached 0.88, though the agents have not yet been run there.</p></li>
+      <li><h3>A hard spending limit</h3><p>Use HASHIRU when a team must stay within its money. Every hire stayed within 1.11 times its budget, while the same agents without the call cap overspent one by 372 times.</p></li>
+      <li><h3>Hard jobs that a specialist can do</h3><p>Hire through HASHIRU when the market sells exact answers. On hard arithmetic and logic grids, the agents were right 79% of the time, against 69% for the cheap model alone.</p></li>
+      <li><h3>A budget too small for the expensive model</h3><p>Expect the cheap model's score at a higher cost. At the budgets we ran, the agents matched <code>gpt-6-luna</code> alone (0.737 against 0.740) at 3.9 times its spend.</p></li>
+      <li><h3>A very small budget</h3><p>Below about $0.006 a project, send each job to one cheap model. A CEO that pays for each turn used up the budget before it answered (0.046 against 0.724).</p></li>
+      <li><h3>A budget with room</h3><p>Split the money instead of using one model. In replay, the cheap model alone stayed near 0.75 as the budget grew eightfold while the cascade reached 0.88. We have not yet run the agents at these budgets.</p></li>
     </ol>
   </section>
 
   <section class="wrap stands reveal" aria-label="Where it stands">
     <div class="keybox">
       <h3>Where it stands</h3>
-      <p>These are small runs ($33.21 of model calls in all) on outcome tables that fail three of seven validity checks, so neither round can show what adapting during the task is worth, and the agents ran live only at the tighter budget. The whitepaper gives every interval and lists each gap with its next step, led by quoting a hire's price when it is made and running the agents at larger budgets.</p>
+      <p>These are small experiments ($33.21 of model calls in total), and our results tables fail three of our seven validity checks, so we cannot yet show what adapting during a task is worth. We have run the agents live only at the smaller budget. The whitepaper gives every interval and the next step for each gap, starting with telling agents a hire's price up front and running them at larger budgets.</p>
     </div>
   </section>
 
@@ -593,12 +593,12 @@
       const xx = x(t);
       el("line", { x1: xx, x2: xx, y1: m.t, y2: m.t + ph, stroke: RULE, "stroke-width": 1, "stroke-dasharray": "2 4" }, svg);
       const lab = el("text", { x: xx, y: m.t + ph + 20, "text-anchor": "middle", "font-size": 13, fill: MUTED }, svg);
-      lab.textContent = String(t);
+      lab.textContent = t + "×";
     });
     const xt = el("text", { x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", "font-size": 13.5, fill: INK }, svg);
-    xt.textContent = narrow ? "Budget τ (× cost of the best answers)" : "Budget τ (times what the best answers cost)";
+    xt.textContent = narrow ? "Budget (× cost of the best answers)" : "Budget (times what the best answers cost)";
     const yt = el("text", { x: 12, y: m.t + ph / 2, "text-anchor": "middle", "font-size": 13.5, fill: INK, transform: `rotate(-90 12 ${m.t + ph / 2})` }, svg);
-    yt.textContent = "Score (share of the value)";
+    yt.textContent = "Score (share of points)";
 
     // crosshair (drawn under the marks)
     const cross = el("line", { x1: 0, x2: 0, y1: m.t, y2: m.t + ph, stroke: INK, "stroke-width": 1, opacity: 0 }, svg);
@@ -621,7 +621,7 @@
       const a = el("text", { x: tx, y: ty - 2, "text-anchor": "middle", "font-size": 13.5, fill: INK, "font-weight": 600 }, svg);
       a.textContent = "HASHIRU v2 agents, live: 0.737";
       const b = el("text", { x: tx, y: ty + 15, "text-anchor": "middle", "font-size": 13, fill: MUTED }, svg);
-      b.textContent = "(level with gpt-6-luna)";
+      b.textContent = "(matches gpt-6-luna)";
     }
 
     // direct labels at the line ends, nudged apart
@@ -664,7 +664,7 @@
     cross.setAttribute("x1", xx); cross.setAttribute("x2", xx); cross.setAttribute("opacity", 0.35);
     marks.forEach(row => row.forEach((mk, j) => mk.setAttribute("transform", j === i ? `translate(${xx} ${mk.getBBox().y + mk.getBBox().height / 2}) scale(1.35) translate(${-xx} ${-(mk.getBBox().y + mk.getBBox().height / 2)})` : "")));
     const rows = SERIES.map(s => ({ s, v: s.v[i] })).sort((a, b) => b.v - a.v);
-    let html = `<div class="t-head">τ = ${T[i]} · ${BUDGET[i]} a project on average</div>`;
+    let html = `<div class="t-head">Budget ${T[i]}× · ${BUDGET[i]} a project on average</div>`;
     rows.forEach(r => {
       html += `<div class="t-row"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="2" fill="${r.s.color}"/></svg><span>${r.s.short}</span><b>${r.v.toFixed(3)}</b></div>`;
     });
