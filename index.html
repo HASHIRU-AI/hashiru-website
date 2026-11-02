@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents That Hold the Money · HASHIRU v2</title>
+<meta name="description" content="HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given. A whitepaper by Kunal Pai and Harshil Patel, November 2026.">
+<link rel="canonical" href="https://hashiru-ai.github.io/hashiru-website/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="HASHIRU">
+<meta property="og:title" content="Agents That Hold the Money">
+<meta property="og:description" content="HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given. Over 551 live hires, none spent more than 1.11 times its reservation.">
+<meta property="og:url" content="https://hashiru-ai.github.io/hashiru-website/">
+<meta property="og:image" content="https://hashiru-ai.github.io/hashiru-website/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agents That Hold the Money, the HASHIRU v2 whitepaper">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#161615">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --night: #161615;
+    --night-2: #1f1e1c;
+    --night-line: #2e2c29;
+    --ink: #1e1d1b;
+    --muted: #6b675f;
+    --accent: #b4561f;
+    --accent-soft: #e29d62;
+    --sand: #f5efe6;
+    --paper: #fbf8f3;
+    --rule: #dcd3c4;
+    --white: #ffffff;
+    --s-cascade: #2a78d6;
+    --s-luna: #eb6834;
+    --s-knap: #1baf7a;
+    --s-spark: #eda100;
+    --sans: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", sans-serif;
+    --mono: "Source Code Pro", "SFMono-Regular", Menlo, monospace;
+    --wrap: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 18px/1.6 var(--sans);
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  code { font-family: var(--mono); font-size: 0.86em; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgba(255,255,255,0.035) 31px 32px),
+      radial-gradient(1200px 520px at 85% 0%, rgba(226,157,98,0.13), transparent 60%),
+      var(--night);
+    color: #fff;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06; pointer-events: none; mix-blend-mode: screen;
+  }
+  .hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 7px; background: var(--accent-soft);
+  }
+  .top {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    max-width: var(--wrap); margin: 0 auto; padding: 22px 24px 0;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 700; letter-spacing: 0.02em; }
+  .brand img { width: 36px; height: 36px; image-rendering: pixelated; border-radius: 6px; }
+  .top .links { display: flex; gap: 22px; font-size: 15px; }
+  .top .links a { color: rgba(255,255,255,0.72); text-decoration: none; }
+  .top .links a:hover, .top .links a:focus-visible { color: var(--accent-soft); }
+  .hero-grid {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 56px; align-items: center;
+    max-width: var(--wrap); margin: 0 auto; padding: 72px 24px 96px;
+  }
+  .kicker { margin: 0 0 18px; color: var(--accent-soft); font-weight: 700; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .kicker span { margin: 0 10px; }
+  h1 {
+    margin: 0; font-weight: 900; font-size: clamp(44px, 6.4vw, 78px); line-height: 0.98; letter-spacing: -0.025em;
+  }
+  .sub { margin: 22px 0 0; max-width: 34ch; font-size: clamp(19px, 2vw, 23px); line-height: 1.4; color: rgba(255,255,255,0.82); }
+  .authors { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 30px 0 0; font-size: 16px; color: rgba(255,255,255,0.62); }
+  .authors b { color: #fff; font-weight: 600; margin-right: 6px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .btn {
+    display: inline-flex; align-items: baseline; gap: 10px; padding: 13px 20px; border-radius: 4px;
+    font-weight: 700; font-size: 16px; text-decoration: none; transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn small { font-weight: 400; font-size: 13px; opacity: 0.8; }
+  .btn.primary { background: var(--accent-soft); color: var(--night); }
+  .btn.primary:hover { background: #ecb27e; transform: translateY(-1px); }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,0.28); }
+  .btn.ghost:hover { border-color: var(--accent-soft); color: var(--accent-soft); }
+  .btn:focus-visible, button:focus-visible, summary:focus-visible, .chart:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+
+  /* ---------- the trace ---------- */
+  .ledger {
+    margin: 0; background: var(--night-2); border: 1px solid var(--night-line); border-radius: 8px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7); font-family: var(--mono); font-size: 13px; color: rgba(255,255,255,0.86);
+  }
+  .ledger-head {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 12px 16px; border-bottom: 1px solid var(--night-line); color: rgba(255,255,255,0.55); font-size: 12px; letter-spacing: 0.04em;
+  }
+  .ledger-head b { color: var(--accent-soft); font-weight: 600; }
+  .ledger-head > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ledger-head button {
+    font: inherit; color: rgba(255,255,255,0.55); background: none; border: 1px solid var(--night-line); border-radius: 3px; padding: 2px 8px; cursor: pointer;
+  }
+  .ledger-head button:hover { color: var(--accent-soft); border-color: var(--accent-soft); }
+  .pool { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px 6px; color: rgba(255,255,255,0.55); font-size: 12px; }
+  .pool-track { height: 8px; background: #2a2825; border-radius: 4px; overflow: hidden; }
+  .pool-fill { height: 100%; width: 0; background: var(--accent-soft); border-radius: 4px; }
+  .rows { list-style: none; margin: 0; padding: 6px 0 8px; }
+  .rows li {
+    display: grid; grid-template-columns: 82px minmax(0, 1fr) 74px 64px; gap: 10px; align-items: baseline;
+    padding: 8px 16px; border-top: 1px dashed rgba(255,255,255,0.07);
+  }
+  .rows li:first-child { border-top: 0; }
+  .rows .ev { color: var(--accent-soft); font-weight: 600; }
+  .rows .what { font-family: var(--sans); font-size: 14.5px; line-height: 1.35; color: rgba(255,255,255,0.86); }
+  .rows .amt, .rows .bal { text-align: right; font-variant-numeric: tabular-nums; }
+  .rows .bal { color: rgba(255,255,255,0.5); }
+  .rows .refused .ev, .rows .refused .what { color: #f2b98a; }
+  .rows .refused { background: rgba(180,86,31,0.14); }
+  .rows .head { color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 2px; padding-bottom: 2px; }
+  .rows .head .what { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.4); }
+  .ledger figcaption {
+    padding: 12px 16px 14px; border-top: 1px solid var(--night-line); font-family: var(--sans); font-size: 14px; line-height: 1.45; color: rgba(255,255,255,0.6);
+  }
+  .play .rows li:not(.head) { opacity: 0; transform: translateY(6px); animation: row-in .45s ease forwards; animation-delay: calc(0.5s + var(--i) * 0.62s); }
+  .play .pool-fill { animation: drain 4.2s linear forwards; }
+  @keyframes row-in { to { opacity: 1; transform: none; } }
+  @keyframes drain {
+    0%, 11% { width: 0; }
+    15% { width: 100%; }
+    41% { width: 100%; }
+    45% { width: 8%; }
+    85% { width: 8%; }
+    89%, 100% { width: 0; }
+  }
+
+  /* ---------- sections ---------- */
+  main { position: relative; }
+  main > section.wrap { margin-top: 88px; }
+  .sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 26px; border-bottom: 1.5px solid var(--accent); padding-bottom: 12px; }
+  .sec-head .num { margin: 0; font-weight: 900; font-size: 44px; line-height: 1; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+  h2 { margin: 0; font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.15; letter-spacing: -0.01em; }
+  h3 { margin: 0 0 6px; font-weight: 700; font-size: 20px; line-height: 1.25; }
+  .lead { max-width: 70ch; margin: 0 0 30px; color: #3a3833; }
+  .eyebrow { margin: 0 0 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+  main > section.wrap.intro { margin-top: 72px; }
+  .lede p { margin: 0; max-width: 64ch; font-size: clamp(19px, 1.9vw, 22px); line-height: 1.55; }
+  .lede p::first-letter { font-weight: 900; font-size: 3.1em; float: left; line-height: 0.86; margin: 6px 10px 0 0; color: var(--accent); }
+  .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 52px; }
+  .pillars article { border-top: 2px solid var(--accent); padding-top: 14px; }
+  .pillars p:last-child { margin: 0; color: #3a3833; font-size: 16.5px; }
+
+  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .stat { background: var(--white); padding: 26px 26px 24px; }
+  .big { margin: 0 0 8px; font-family: var(--mono); font-weight: 600; font-size: clamp(34px, 4.4vw, 50px); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .big span { color: var(--accent); }
+  .big em { font-family: var(--sans); font-style: normal; font-weight: 400; font-size: 0.42em; color: var(--muted); margin: 0 4px; letter-spacing: 0; vertical-align: 0.35em; }
+  .stat .cap { margin: 0; font-size: 16px; color: #3a3833; max-width: 46ch; }
+  .keybox {
+    margin-top: 28px; background: var(--sand); border-left: 4px solid var(--accent); padding: 20px 24px 20px 22px;
+  }
+  .keybox h3 { color: var(--accent); }
+  .keybox p { margin: 0; max-width: 78ch; }
+
+  /* ---------- chart ---------- */
+  .chart-card { margin: 0; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 22px 18px; position: relative; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 12px; font-size: 15px; color: var(--ink); }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .legend svg { flex: none; }
+  .chart { position: relative; width: 100%; touch-action: pan-y; }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart text { font-family: var(--sans); }
+  .tooltip {
+    position: absolute; z-index: 3; pointer-events: none; min-width: 230px;
+    background: var(--night); color: #fff; border-radius: 6px; padding: 10px 12px; font-size: 14px; line-height: 1.4;
+    box-shadow: 0 12px 28px -12px rgba(0,0,0,0.45);
+  }
+  .tooltip .t-head { color: var(--accent-soft); font-weight: 700; margin-bottom: 6px; }
+  .tooltip .t-row { display: grid; grid-template-columns: 12px 1fr auto; gap: 8px; align-items: center; }
+  .tooltip .t-row b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tooltip .t-note { margin-top: 6px; color: rgba(255,255,255,0.6); font-size: 13px; }
+  .chart-card figcaption { margin-top: 10px; font-size: 15px; color: var(--muted); max-width: 80ch; }
+  details { margin-top: 14px; border-top: 1px solid var(--rule); padding-top: 10px; }
+  summary { cursor: pointer; font-weight: 600; color: var(--accent); font-size: 15px; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; min-width: 560px; }
+  th, td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { background: var(--sand); font-weight: 700; }
+  td.n { font-family: var(--mono); font-size: 14px; }
+  tr.agents td { font-weight: 700; }
+  tr.diff td { border-bottom: 0; }
+  tr.ci td { color: var(--muted); font-size: 13px; }
+
+  /* ---------- team ---------- */
+  .team-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .team-grid > div { max-width: 70ch; }
+  .team-grid p { margin: 0 0 14px; }
+  pre.code {
+    margin: 0; background: var(--night); color: #efe9df; border-radius: 6px; padding: 20px 22px; overflow-x: auto;
+    font: 400 14px/1.6 var(--mono); border-left: 4px solid var(--accent-soft);
+  }
+  pre.code .c { color: #8f8a80; }
+  pre.code .k { color: var(--accent-soft); }
+  pre.code .p { color: #9fc3ef; }
+
+  /* ---------- rules ---------- */
+  .rules { list-style: none; counter-reset: r; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .rules li { counter-increment: r; position: relative; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 22px 18px 64px; }
+  .rules li::before {
+    content: counter(r); position: absolute; left: 20px; top: 16px; font-weight: 900; font-size: 32px; line-height: 1; color: var(--accent-soft);
+  }
+  .rules li:last-child { grid-column: 1 / -1; }
+  .rules p { margin: 0; font-size: 16.5px; color: #3a3833; }
+
+  /* ---------- stands, cite, footer ---------- */
+  .stands .keybox { margin-top: 0; }
+  .cite-box { position: relative; }
+  .cite-box pre { margin: 0; background: var(--white); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; overflow-x: auto; font: 400 14px/1.6 var(--mono); }
+  .copy {
+    position: absolute; top: 10px; right: 10px; font: 600 13px var(--sans); color: var(--accent); background: var(--sand);
+    border: 1px solid var(--rule); border-radius: 4px; padding: 5px 10px; cursor: pointer;
+  }
+  .copy:hover { border-color: var(--accent); }
+  footer { margin-top: 96px; background: var(--night); color: rgba(255,255,255,0.62); font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding-top: 34px; padding-bottom: 38px; }
+  footer a { color: var(--accent-soft); }
+  footer p { margin: 0; max-width: 62ch; }
+
+  /* ---------- reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .play .rows li:not(.head) { animation: none; opacity: 1; transform: none; }
+    .play .pool-fill { animation: none; width: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 44px; padding: 52px 24px 76px; }
+  }
+  @media (max-width: 720px) {
+    body { font-size: 17px; }
+    .top .links a:not(.gh) { display: none; }
+    .pillars, .stats, .rules { grid-template-columns: minmax(0, 1fr); }
+    .rules li:last-child { grid-column: auto; }
+    main > section.wrap { margin-top: 64px; }
+    main > section.wrap.intro { margin-top: 52px; }
+    .sec-head .num { font-size: 34px; }
+  }
+  @media (max-width: 520px) {
+    .wrap, .top, .hero-grid { padding-left: 16px; padding-right: 16px; }
+    .rows li { grid-template-columns: 64px minmax(0, 1fr) 76px; }
+    .ledger-head { font-size: 11px; }
+    .rows .bal { display: none; }
+    .pool { padding-left: 12px; padding-right: 12px; }
+    .rows li { padding-left: 12px; padding-right: 12px; }
+    .chart-card { padding: 16px 12px 14px; }
+    .rules li { padding-left: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <nav class="top" aria-label="Main">
+    <a class="brand" href="#top" id="top"><img src="assets/logo.png" alt="" width="36" height="36">HASHIRU</a>
+    <div class="links">
+      <a href="#results">Results</a>
+      <a href="#budget">Budgets</a>
+      <a href="#use">When to use</a>
+      <a href="#cite">Cite</a>
+      <a class="gh" href="https://github.com/HASHIRU-AI/HASHIRU">GitHub</a>
+    </div>
+  </nav>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">Whitepaper<span aria-hidden="true">•</span>November 2026</p>
+      <h1>Agents That Hold the Money</h1>
+      <p class="sub">HASHIRU v2 builds teams of language-model agents that hire, spend and answer within the money they are given.</p>
+      <p class="authors"><span><b>Kunal Pai</b>UCLA</span><span><b>Harshil Patel</b>UC Davis</span></p>
+      <div class="cta">
+        <a class="btn primary" href="hashiru-v2-whitepaper.pdf">Read the whitepaper <small>PDF, 24 pages</small></a>
+        <a class="btn ghost" href="https://github.com/HASHIRU-AI/HASHIRU">Code on GitHub</a>
+      </div>
+    </div>
+
+    <figure class="ledger play" id="ledger">
+      <div class="ledger-head">
+        <span>trace <b>·</b> one hire of muse-spark-1.3</span>
+        <button type="button" id="replay" aria-label="Replay the trace">replay</button>
+      </div>
+      <div class="pool" aria-hidden="true"><span>pool</span><div class="pool-track"><div class="pool-fill"></div></div><span>$0.005 reserved</span></div>
+      <ol class="rows">
+        <li class="head" aria-hidden="true"><span>event</span><span class="what">what the hub does</span><span class="amt">amount</span><span class="bal">pool</span></li>
+        <li style="--i:0"><span class="ev">hire</span><span class="what">The CEO hires the model and reserves its pool</span><span class="amt">$0.0050</span><span class="bal">0.0050</span></li>
+        <li style="--i:1"><span class="ev">call</span><span class="what">Output capped to what the hire holds</span><span class="amt">·</span><span class="bal">0.0050</span></li>
+        <li style="--i:2"><span class="ev">billed</span><span class="what">The provider replies</span><span class="amt">−$0.0046</span><span class="bal">0.0004</span></li>
+        <li class="refused" style="--i:3"><span class="ev">refused</span><span class="what">Next call stopped before the provider: a short answer costs about $0.0011, reserve more</span><span class="amt">$0</span><span class="bal">0.0004</span></li>
+        <li style="--i:4"><span class="ev">answer</span><span class="what">Closing turn, the hire answers with what it has</span><span class="amt">·</span><span class="bal">0.0004</span></li>
+        <li style="--i:5"><span class="ev">fire</span><span class="what">What was not spent goes back to the CEO</span><span class="amt">+$0.0004</span><span class="bal">0</span></li>
+      </ol>
+      <figcaption>The median hire of the dear model in our runs. Nothing was spent past the pool, and the pool was set below the model's price, which is what v2 still gets most wrong.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+  <section class="wrap intro reveal" aria-label="Summary">
+    <div class="lede">
+      <p>A team of language-model agents spends money every time it hires a strong cloud model for a hard step, a cheap one for an easy step, or an outside agent that sells an exact answer. HASHIRU v2 gives that money to the agents themselves. Each agent holds a pool reserved from its hirer's and spends it by hiring, over the open protocols agents and tools now share (A2A and MCP). The hub makes that spending safe. A call is bounded by what its agent holds before it is made, firing returns what was not spent, and an agent with one step left is made to answer.</p>
+    </div>
+    <div class="pillars">
+      <article>
+        <p class="eyebrow">The system</p>
+        <h3>An economy for agents</h3>
+        <p>Each agent holds a pool reserved from its hirer's and hires models and priced agents over A2A and MCP.</p>
+      </article>
+      <article>
+        <p class="eyebrow">The guards</p>
+        <h3>Spending bounded by construction</h3>
+        <p>Each call is bounded by what its agent holds (as closely as the hub counts tokens), firing refunds what was not spent, and an agent with one step left must answer.</p>
+      </article>
+      <article>
+        <p class="eyebrow">The result</p>
+        <h3>Guards that hold</h3>
+        <p>Over 551 live hires, none spent more than 1.11 times its reservation, against 372 times as first built.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="results" class="wrap reveal">
+    <header class="sec-head"><p class="num">01</p><h2>What the runs show</h2></header>
+    <div class="stats">
+      <div class="stat">
+        <p class="big">1.11<span>×</span></p>
+        <p class="cap">The most any of 551 live hires (in 120 runs) spent against its reservation. As first built, HASHIRU let a hire spend 372 times its reservation and lost half its runs.</p>
+      </div>
+      <div class="stat">
+        <p class="big">+0.136</p>
+        <p class="cap">Score gained by holding long inputs out of the CEO's context (0.463 to 0.599 of the value, 95% interval +0.067 to +0.216), with the CEO's own calls cut from 43% of the budget to 32%.</p>
+      </div>
+      <div class="stat">
+        <p class="big">79<span>%</span><em>vs</em>69<span>%</span></p>
+        <p class="cap">Right on hard jobs that a specialist in the market can do (62 of 78), against 54 of 78 for the cheap model alone.</p>
+      </div>
+      <div class="stat">
+        <p class="big">0.737<em>vs</em>0.740</p>
+        <p class="cap">Overall score against the cheap model alone. On the projects whose budget pays for the CEO, the agents score level with it, at 3.9 times its spend.</p>
+      </div>
+    </div>
+    <div class="keybox">
+      <h3>What still holds the agents back</h3>
+      <p>The agents pick the dear model (<code>muse-spark-1.3</code>) for hard jobs but fund it below its price. Its 79 hires took 55% of what the agents spent ($0.99 of $1.81) and returned 12 right answers, where its calibrated rate on hard jobs is 87 to 100%. The first fix on the roadmap is to quote that price when the hire is made, from the same statistics the hub already routes on.</p>
+    </div>
+  </section>
+
+  <section id="budget" class="wrap reveal">
+    <header class="sec-head"><p class="num">02</p><h2>Allocating pays once the budget has room</h2></header>
+    <p class="lead">Replaying the outcome table at four budgets (no model calls) shows where an allocator can win. The cheap model alone scores 0.740 to 0.749 whatever the budget, since it has nothing to buy with the rest. The cascade, which adapts during the task as the agents do, trails it by 0.051 at the smallest budget and leads it by 0.133 at the largest (95% interval +0.078 to +0.192, ahead on 12 of 16 projects).</p>
+    <figure class="chart-card">
+      <div class="legend" id="legend" aria-hidden="true"></div>
+      <div class="chart" id="chart" tabindex="0" role="img"
+           aria-label="Line chart of score against budget. Every job on gpt-6-luna stays near 0.75 at every budget. The cascade rises from 0.696 to 0.882, the knapsack from 0.776 to 0.910, and every job on muse-spark-1.3 from 0.350 to 0.815. HASHIRU v2's agents, run live at a budget of 0.5, score 0.737."></div>
+      <div class="tooltip" id="tip" hidden></div>
+      <figcaption>Scores on the sixteen projects whose budget is at least $0.006, as the budget grows eightfold (τ is the budget as a multiple of what the best answers cost), replayed from the outcome table with three runs per project. The agents ran live at τ = 0.5 only (ringed), so the sweep shows where an allocator can win, not that the agents do.</figcaption>
+      <details>
+        <summary>Show the numbers</summary>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Allocator</th><th scope="col">τ = 0.25</th><th scope="col">τ = 0.5</th><th scope="col">τ = 1</th><th scope="col">τ = 2</th></tr></thead>
+            <tbody>
+              <tr><td>Mean budget a project</td><td class="n">$0.036</td><td class="n">$0.072</td><td class="n">$0.144</td><td class="n">$0.288</td></tr>
+              <tr><td>Every job on <code>gpt-6-luna</code></td><td class="n">0.747</td><td class="n">0.740</td><td class="n">0.748</td><td class="n">0.749</td></tr>
+              <tr><td>Every job on <code>gpt-5-nano</code></td><td class="n">0.635</td><td class="n">0.700</td><td class="n">0.721</td><td class="n">0.723</td></tr>
+              <tr><td>Every job on <code>muse-spark-1.3</code></td><td class="n">0.350</td><td class="n">0.427</td><td class="n">0.562</td><td class="n">0.815</td></tr>
+              <tr><td>Equal split</td><td class="n">0.748</td><td class="n">0.761</td><td class="n">0.791</td><td class="n">0.808</td></tr>
+              <tr><td>Cascade (adapts during the task)</td><td class="n">0.696</td><td class="n">0.712</td><td class="n">0.783</td><td class="n">0.882</td></tr>
+              <tr><td>Knapsack (plans up front)</td><td class="n">0.776</td><td class="n">0.817</td><td class="n">0.826</td><td class="n">0.910</td></tr>
+              <tr><td>Oracle (knows the outcomes)</td><td class="n">0.825</td><td class="n">0.838</td><td class="n">0.844</td><td class="n">0.947</td></tr>
+              <tr class="agents"><td>HASHIRU v2 agents (live)</td><td></td><td class="n">0.737</td><td></td><td></td></tr>
+              <tr class="diff"><td>Cascade minus <code>gpt-6-luna</code></td><td class="n">−0.051</td><td class="n">−0.028</td><td class="n">+0.035</td><td class="n">+0.133</td></tr>
+              <tr class="ci"><td>95% interval over projects</td><td class="n">[−0.108, +0.004]</td><td class="n">[−0.088, +0.031]</td><td class="n">[−0.036, +0.100]</td><td class="n">[+0.078, +0.192]</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </figure>
+  </section>
+
+  <section id="team" class="wrap reveal">
+    <header class="sec-head"><p class="num">03</p><h2>Give a team a budget</h2></header>
+    <div class="team-grid">
+      <div>
+        <p>A team is one YAML file and one command. This one sets up the market of the whitepaper's evaluation (three cloud models, a priced logic-grid solver over A2A, and calibrated rates for level-5 arithmetic).</p>
+        <p>Every request then gets a CEO with a pool of <code>budget_usd</code>, the process stops at <code>max_usd</code>, and the trace records every reservation, call and refund.</p>
+      </div>
+<pre class="code"><span class="c"># team.yaml</span>
+<span class="k">ceo_model</span>: gpt-6-luna
+<span class="k">models</span>: [gpt-5-nano, gpt-6-luna, meta/muse-spark-1.3]
+<span class="k">budget_usd</span>: 0.10              <span class="c"># the CEO's pool for each request</span>
+<span class="k">max_usd</span>: 5.00                 <span class="c"># real spend, for the whole process</span>
+<span class="k">request_by_reference</span>: true    <span class="c"># long sections stay out of the CEO's context</span>
+<span class="k">a2a_peers</span>:
+  <span class="k">csp</span>: {url: http://127.0.0.1:9512/}    <span class="c"># a priced logic-grid solver</span>
+<span class="k">success_rates</span>:                <span class="c"># kind -> model -> [rate, mean cost in $]</span>
+  <span class="k">arithmetic level 5</span>: {gpt-6-luna: [0.25, 0.0031],
+                       gpt-5-nano: [0.53, 0.0073],
+                       meta/muse-spark-1.3: [0.92, 0.0961]}
+
+<span class="p">$</span> uv run --env-file .env hashiru ask --config team.yaml "Answer the jobs below ..."</pre>
+    </div>
+  </section>
+
+  <section id="use" class="wrap reveal">
+    <header class="sec-head"><p class="num">04</p><h2>When to use HASHIRU v2 today</h2></header>
+    <p class="lead">Five rules of thumb from our runs, each scoped to the market we measured.</p>
+    <ol class="rules">
+      <li><h3>A hard spending limit</h3><p>Use HASHIRU when a team must stay inside its money. Every hire stayed within 1.11 times its reservation, where the same agents without the call bound overran one by 372 times.</p></li>
+      <li><h3>Hard jobs that a specialist can do</h3><p>Hire through HASHIRU when the market sells an exact answer. On hard arithmetic and logic grids, the agents were right 79% of the time, against 69% for the cheap model alone.</p></li>
+      <li><h3>A budget that cannot pay for the dear model</h3><p>Expect the cheap model's score at a higher spend. At the budgets we ran, the agents scored level with <code>gpt-6-luna</code> alone (0.737 against 0.740) at 3.9 times its spend.</p></li>
+      <li><h3>A very small budget</h3><p>Below about $0.006 a project, send each job to one cheap model. A CEO that pays for each turn spent the budget before it answered (0.046 against 0.724).</p></li>
+      <li><h3>A budget with room</h3><p>Allocate rather than fix one model. In replay, the cheap model alone stayed near 0.75 as the budget grew eightfold while the cascade reached 0.88, though the agents have not yet been run there.</p></li>
+    </ol>
+  </section>
+
+  <section class="wrap stands reveal" aria-label="Where it stands">
+    <div class="keybox">
+      <h3>Where it stands</h3>
+      <p>These are small runs ($33.21 of model calls in all) on outcome tables that fail three of seven validity checks, so neither round can show what adapting during the task is worth, and the agents ran live only at the tighter budget. The whitepaper gives every interval and lists each gap with its next step, led by quoting a hire's price when it is made and running the agents at larger budgets.</p>
+    </div>
+  </section>
+
+  <section id="cite" class="wrap reveal">
+    <header class="sec-head"><p class="num">05</p><h2>Cite</h2></header>
+    <div class="cite-box">
+<pre id="bibtex">@misc{pai2026agents,
+  title        = {Agents That Hold the Money},
+  author       = {Pai, Kunal and Patel, Harshil},
+  year         = {2026},
+  howpublished = {{HASHIRU} v2 whitepaper},
+  url          = {https://hashiru-ai.github.io/hashiru-website/}
+}</pre>
+      <button type="button" class="copy" id="copy">Copy</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>HASHIRU v2 is source-available under the PolyForm Noncommercial License 1.0.0 at <a href="https://github.com/HASHIRU-AI/HASHIRU">github.com/HASHIRU-AI/HASHIRU</a>. HASHIRU v1 is described in <a href="https://arxiv.org/abs/2506.04255">arXiv 2506.04255</a>, with its code at tag <code>v1.0-paper</code>.</p>
+    <p>© 2026 Kunal Pai and Harshil Patel</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- the trace: replay ---- */
+  const ledger = document.getElementById("ledger");
+  document.getElementById("replay").addEventListener("click", () => {
+    ledger.classList.remove("play");
+    void ledger.offsetWidth;
+    ledger.classList.add("play");
+  });
+
+  /* ---- reveal on scroll ---- */
+  const reveals = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    reveals.forEach(el => el.classList.add("in"));
+  } else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    reveals.forEach(el => io.observe(el));
+  }
+
+  /* ---- copy BibTeX ---- */
+  const copyBtn = document.getElementById("copy");
+  copyBtn.addEventListener("click", async () => {
+    const text = document.getElementById("bibtex").textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = "Copied";
+    } catch (err) {
+      const r = document.createRange();
+      r.selectNodeContents(document.getElementById("bibtex"));
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = "Selected";
+    }
+    setTimeout(() => { copyBtn.textContent = "Copy"; }, 1600);
+  });
+
+  /* ---- the budget chart ---- */
+  const T = [0.25, 0.5, 1, 2];
+  const BUDGET = ["$0.036", "$0.072", "$0.144", "$0.288"];
+  const SERIES = [
+    { name: "Cascade (adapts during the task)", short: "Cascade", color: "#2A78D6", shape: "circle", v: [0.696, 0.712, 0.783, 0.882] },
+    { name: "Every job on gpt-6-luna", short: "gpt-6-luna alone", color: "#EB6834", shape: "square", v: [0.747, 0.740, 0.748, 0.749] },
+    { name: "Knapsack (plans up front)", short: "Knapsack", color: "#1BAF7A", shape: "triangle", v: [0.776, 0.817, 0.826, 0.910] },
+    { name: "Every job on muse-spark-1.3", short: "muse-spark-1.3 alone", color: "#EDA100", shape: "diamond", v: [0.350, 0.427, 0.562, 0.815] },
+  ];
+  const LIVE = { i: 1, v: 0.737 };
+  const NS = "http://www.w3.org/2000/svg";
+  const INK = "#1E1D1B", MUTED = "#6B675F", RULE = "#DCD3C4";
+
+  function el(tag, attrs, parent) {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function marker(shape, cx, cy, r, color, parent) {
+    const a = { fill: color, stroke: "#fff", "stroke-width": 2 };
+    if (shape === "circle") return el("circle", { cx, cy, r, ...a }, parent);
+    if (shape === "square") return el("rect", { x: cx - r * 0.88, y: cy - r * 0.88, width: r * 1.76, height: r * 1.76, rx: 1.5, ...a }, parent);
+    if (shape === "triangle") return el("path", { d: `M${cx},${cy - r * 1.15}L${cx + r * 1.05},${cy + r * 0.8}L${cx - r * 1.05},${cy + r * 0.8}Z`, ...a }, parent);
+    return el("path", { d: `M${cx},${cy - r * 1.2}L${cx + r},${cy}L${cx},${cy + r * 1.2}L${cx - r},${cy}Z`, ...a }, parent);
+  }
+
+  // legend (HTML, with the same marker shapes)
+  const legend = document.getElementById("legend");
+  SERIES.forEach(s => {
+    const span = document.createElement("span");
+    const svg = el("svg", { width: 26, height: 14, viewBox: "0 0 26 14" });
+    el("line", { x1: 1, y1: 7, x2: 25, y2: 7, stroke: s.color, "stroke-width": 2, "stroke-linecap": "round" }, svg);
+    marker(s.shape, 13, 7, 4.5, s.color, svg);
+    span.appendChild(svg);
+    span.appendChild(document.createTextNode(s.name));
+    legend.appendChild(span);
+  });
+  const liveLeg = document.createElement("span");
+  const lsvg = el("svg", { width: 26, height: 14, viewBox: "0 0 26 14" });
+  el("circle", { cx: 13, cy: 7, r: 5.5, fill: "none", stroke: INK, "stroke-width": 2 }, lsvg);
+  liveLeg.appendChild(lsvg);
+  liveLeg.appendChild(document.createTextNode("HASHIRU v2 agents (live)"));
+  legend.appendChild(liveLeg);
+
+  const host = document.getElementById("chart");
+  const tip = document.getElementById("tip");
+  let active = -1, geom = null;
+
+  function render() {
+    const W = Math.max(300, host.clientWidth);
+    const narrow = W < 600;
+    const H = narrow ? 300 : 400;
+    const m = { l: narrow ? 40 : 52, r: narrow ? 14 : 150, t: 14, b: narrow ? 46 : 54 };
+    const pw = W - m.l - m.r, ph = H - m.t - m.b;
+    const x = t => m.l + ((Math.log2(t) + 2.3) / 3.6) * pw;
+    const y = v => m.t + ((0.95 - v) / 0.65) * ph;
+    host.innerHTML = "";
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, "aria-hidden": "true", focusable: "false" }, host);
+
+    // grid and axes (recessive)
+    for (let v = 0.3; v <= 0.901; v += 0.1) {
+      const yy = y(v);
+      el("line", { x1: m.l, x2: m.l + pw, y1: yy, y2: yy, stroke: RULE, "stroke-width": 1 }, svg);
+      const t = el("text", { x: m.l - 8, y: yy + 4, "text-anchor": "end", "font-size": 13, fill: MUTED }, svg);
+      t.textContent = v.toFixed(1);
+    }
+    T.forEach((t, i) => {
+      const xx = x(t);
+      el("line", { x1: xx, x2: xx, y1: m.t, y2: m.t + ph, stroke: RULE, "stroke-width": 1, "stroke-dasharray": "2 4" }, svg);
+      const lab = el("text", { x: xx, y: m.t + ph + 20, "text-anchor": "middle", "font-size": 13, fill: MUTED }, svg);
+      lab.textContent = String(t);
+    });
+    const xt = el("text", { x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", "font-size": 13.5, fill: INK }, svg);
+    xt.textContent = narrow ? "Budget τ (× cost of the best answers)" : "Budget τ (times what the best answers cost)";
+    const yt = el("text", { x: 12, y: m.t + ph / 2, "text-anchor": "middle", "font-size": 13.5, fill: INK, transform: `rotate(-90 12 ${m.t + ph / 2})` }, svg);
+    yt.textContent = "Score (share of the value)";
+
+    // crosshair (drawn under the marks)
+    const cross = el("line", { x1: 0, x2: 0, y1: m.t, y2: m.t + ph, stroke: INK, "stroke-width": 1, opacity: 0 }, svg);
+
+    // series
+    const marks = [];
+    SERIES.forEach((s, si) => {
+      const d = s.v.map((v, i) => `${i ? "L" : "M"}${x(T[i]).toFixed(1)},${y(v).toFixed(1)}`).join("");
+      el("path", { d, fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+      marks[si] = s.v.map((v, i) => marker(s.shape, x(T[i]), y(v), narrow ? 4.5 : 5, s.color, svg));
+    });
+
+    // the live point, ringed
+    const lx = x(T[LIVE.i]), ly = y(LIVE.v);
+    el("circle", { cx: lx, cy: ly, r: narrow ? 9 : 11, fill: "none", stroke: "#fff", "stroke-width": 4 }, svg);
+    el("circle", { cx: lx, cy: ly, r: narrow ? 9 : 11, fill: "none", stroke: INK, "stroke-width": 2 }, svg);
+    if (!narrow) {
+      const tx = x(0.36), ty = y(0.62);
+      el("line", { x1: lx - 7, y1: ly + 8, x2: tx + 10, y2: ty - 16, stroke: INK, "stroke-width": 1 }, svg);
+      const a = el("text", { x: tx, y: ty - 2, "text-anchor": "middle", "font-size": 13.5, fill: INK, "font-weight": 600 }, svg);
+      a.textContent = "HASHIRU v2 agents, live: 0.737";
+      const b = el("text", { x: tx, y: ty + 15, "text-anchor": "middle", "font-size": 13, fill: MUTED }, svg);
+      b.textContent = "(level with gpt-6-luna)";
+    }
+
+    // direct labels at the line ends, nudged apart
+    if (!narrow) {
+      const ends = SERIES.map((s, si) => ({ si, y0: y(s.v[3]), y: y(s.v[3]) })).sort((p, q) => p.y0 - q.y0);
+      for (let k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 17) ends[k].y = ends[k - 1].y + 17;
+      ends.forEach(e => {
+        const s = SERIES[e.si];
+        const x0 = x(2) + 10;
+        if (Math.abs(e.y - e.y0) > 1) el("line", { x1: x(2) + 7, y1: e.y0, x2: x0 + 4, y2: e.y, stroke: RULE, "stroke-width": 1 }, svg);
+        const t = el("text", { x: x0 + 8, y: e.y + 4.5, "font-size": 13.5, fill: INK }, svg);
+        const vv = el("tspan", { "font-weight": 600 }, t);
+        vv.textContent = s.v[3].toFixed(3);
+        const nn = el("tspan", { dx: 6, fill: MUTED }, t);
+        nn.textContent = s.short;
+      });
+    }
+
+    // hit area
+    const hit = el("rect", { x: m.l - 20, y: m.t, width: pw + 40, height: ph, fill: "transparent" }, svg);
+    geom = { svg, x, y, m, pw, ph, W, H, cross, marks, narrow };
+    const pick = clientX => {
+      const r = svg.getBoundingClientRect();
+      const px = (clientX - r.left) * (W / r.width);
+      let best = 0, bd = Infinity;
+      T.forEach((t, i) => { const d = Math.abs(x(t) - px); if (d < bd) { bd = d; best = i; } });
+      return best;
+    };
+    hit.addEventListener("pointermove", e => show(pick(e.clientX)));
+    hit.addEventListener("pointerdown", e => show(pick(e.clientX)));
+    hit.addEventListener("pointerleave", hide);
+    if (active >= 0) show(active);
+  }
+
+  function show(i) {
+    if (!geom) return;
+    active = i;
+    const { x, cross, marks, svg, W } = geom;
+    const xx = x(T[i]);
+    cross.setAttribute("x1", xx); cross.setAttribute("x2", xx); cross.setAttribute("opacity", 0.35);
+    marks.forEach(row => row.forEach((mk, j) => mk.setAttribute("transform", j === i ? `translate(${xx} ${mk.getBBox().y + mk.getBBox().height / 2}) scale(1.35) translate(${-xx} ${-(mk.getBBox().y + mk.getBBox().height / 2)})` : "")));
+    const rows = SERIES.map(s => ({ s, v: s.v[i] })).sort((a, b) => b.v - a.v);
+    let html = `<div class="t-head">τ = ${T[i]} · ${BUDGET[i]} a project on average</div>`;
+    rows.forEach(r => {
+      html += `<div class="t-row"><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="2" fill="${r.s.color}"/></svg><span>${r.s.short}</span><b>${r.v.toFixed(3)}</b></div>`;
+    });
+    if (i === LIVE.i) {
+      html += `<div class="t-row"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#fff" stroke-width="1.6"/></svg><span>HASHIRU v2 agents (live)</span><b>${LIVE.v.toFixed(3)}</b></div>`;
+    } else {
+      html += `<div class="t-note">The agents were not run live at this budget.</div>`;
+    }
+    tip.innerHTML = html;
+    tip.hidden = false;
+    const card = host.parentElement.getBoundingClientRect();
+    const r = svg.getBoundingClientRect();
+    const scale = r.width / W;
+    const tw = tip.offsetWidth;
+    let left = r.left - card.left + xx * scale + 16;
+    if (left + tw > card.width - 8) left = r.left - card.left + xx * scale - tw - 16;
+    left = Math.max(8, left);
+    tip.style.left = left + "px";
+    tip.style.top = (r.top - card.top + 18) + "px";
+  }
+  function hide() {
+    active = -1;
+    tip.hidden = true;
+    if (!geom) return;
+    geom.cross.setAttribute("opacity", 0);
+    geom.marks.forEach(row => row.forEach(mk => mk.setAttribute("transform", "")));
+  }
+
+  host.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") { show(Math.min(T.length - 1, active + 1)); e.preventDefault(); }
+    else if (e.key === "ArrowLeft") { show(Math.max(0, active < 0 ? 0 : active - 1)); e.preventDefault(); }
+    else if (e.key === "Escape") hide();
+  });
+  host.addEventListener("focus", () => { if (active < 0) show(LIVE.i); });
+  host.addEventListener("blur", hide);
+
+  render();
+  let rt;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 120); });
+})();
+</script>
+</body>
+</html>
