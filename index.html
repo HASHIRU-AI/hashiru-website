@@ -380,7 +380,7 @@
     </div>
     <div class="keybox">
       <h3>What still holds the agents back</h3>
-      <p>The agents pick the expensive model (<code>muse-spark-1.3</code>) for hard jobs, but give it too little money. Its 79 hires took 55% of what the agents spent ($0.99 of $1.81) and got 12 answers right, though it got 87 to 100% of hard jobs right in our test runs. The first fix on our roadmap is to tell the agent the price when it hires, using numbers the hub already has.</p>
+      <p>The agents pick the expensive model (<code>muse-spark-1.3</code>) for hard jobs, but give it too little money. Its 79 hires took 55% of what the agents spent ($0.99 of $1.81) and got 12 answers right, though it got 87 to 100% of hard jobs right in our test runs. The hub now tells the agent that price when it hires, using numbers it already has. This fix is built and tested, but we have not yet run it live.</p>
     </div>
   </section>
 
@@ -417,8 +417,27 @@
     </figure>
   </section>
 
+  <section id="open" class="wrap reveal">
+    <header class="sec-head"><p class="num">03</p><h2>A small model can learn the split, but not beat the solver</h2></header>
+    <p class="lead">In a third round, we ran open models ourselves on one rented GPU (about 5.5 hours and $24 of credits, with no paid API calls). We trained Qwen3.5 9B to copy the knapsack solver's split of the money from a project's outline, then scored it on all twenty projects of the second round (the chart above uses sixteen), with its own reply paid from the budget.</p>
+    <div class="stats">
+      <div class="stat">
+        <p class="big">0.750<em>vs</em>0.788</p>
+        <p class="cap">The trained model against the free knapsack solver, at half of what the best answers cost. It picks the solver's option for 92% of jobs, but its reply costs about 8% of the budget, so it trails the solver at every budget (by 0.023 to 0.052).</p>
+      </div>
+      <div class="stat">
+        <p class="big">+0.17</p>
+        <p class="cap">Gained by training, over the same model untrained (0.578), at that budget. The gain is 0.15 to 0.22 across four budgets, and every 95% interval is above zero. With thinking on, the untrained model never finished, so it answered nothing.</p>
+      </div>
+    </div>
+    <div class="keybox">
+      <h3>Weaker models did not make the hidden difficulty pay</h3>
+      <p>Before training, we measured Ministral 3 3B, Qwen3.5 9B and Gemma 4 31B. A job's hidden difficulty now moved their success a lot, but knowing it was still worth almost nothing (0.006 of the points), because Gemma 4 31B was both the strongest model and the cheapest per attempt. The trained model is on <a href="https://huggingface.co/guineapig/purse-splitter-qwen3.5-9b">Hugging Face</a>.</p>
+    </div>
+  </section>
+
   <section id="team" class="wrap reveal">
-    <header class="sec-head"><p class="num">03</p><h2>Give a team a budget</h2></header>
+    <header class="sec-head"><p class="num">04</p><h2>Give a team a budget</h2></header>
     <div class="team-grid">
       <div>
         <p>A team is one YAML file and one command. This file sets up the market from our evaluation, with three cloud models, a paid logic-grid solver reached over A2A, and measured success rates for level-5 arithmetic.</p>
@@ -442,7 +461,7 @@
   </section>
 
   <section id="use" class="wrap reveal">
-    <header class="sec-head"><p class="num">04</p><h2>When to use HASHIRU v2 today</h2></header>
+    <header class="sec-head"><p class="num">05</p><h2>When to use HASHIRU v2 today</h2></header>
     <p class="lead">Five rules of thumb from our runs, each limited to the market we measured.</p>
     <ol class="rules">
       <li><h3>A hard spending limit</h3><p>Use HASHIRU when a team must stay within its money. Every hire stayed within 1.11 times its budget, while the same agents without the call cap overspent one by 372 times.</p></li>
@@ -456,12 +475,12 @@
   <section class="wrap stands reveal" aria-label="Where it stands">
     <div class="keybox">
       <h3>Where it stands</h3>
-      <p>These are small experiments ($33.21 of model calls in total), and our results tables fail three of our seven validity checks, so we cannot yet show what adapting during a task is worth. We have run the agents live only at the smaller budget. The whitepaper gives every interval and the next step for each gap, starting with telling agents a hire's price up front and running them at larger budgets.</p>
+      <p>These are small experiments ($33.21 of model calls in total, plus about $24 of GPU time), and our results tables fail three of our seven validity checks, so we cannot yet show what adapting during a task is worth. We have run the agents live only at the smaller budget. The whitepaper gives every interval and the next step for each gap, starting with running the price quote at hire time live and running the agents at larger budgets.</p>
     </div>
   </section>
 
   <section id="cite" class="wrap reveal">
-    <header class="sec-head"><p class="num">05</p><h2>Cite</h2></header>
+    <header class="sec-head"><p class="num">06</p><h2>Cite</h2></header>
     <div class="cite-box">
 <pre id="bibtex">@misc{pai2026agents,
   title        = {Agents That Hold the Money},
@@ -477,7 +496,7 @@
 
 <footer>
   <div class="wrap">
-    <p>HASHIRU v2 is source-available under the PolyForm Noncommercial License 1.0.0 at <a href="https://github.com/HASHIRU-AI/HASHIRU">github.com/HASHIRU-AI/HASHIRU</a>. HASHIRU v1 is described in <a href="https://arxiv.org/abs/2506.04255">arXiv 2506.04255</a>, with its code at tag <code>v1.0-paper</code>.</p>
+    <p>HASHIRU v2 is source-available under the PolyForm Noncommercial License 1.0.0 at <a href="https://github.com/HASHIRU-AI/HASHIRU">github.com/HASHIRU-AI/HASHIRU</a>. HASHIRU v1 is described in <a href="https://arxiv.org/abs/2506.04255">arXiv 2506.04255</a>, with its code at tag <code>v1.0-paper</code>. The trained splitter is on <a href="https://huggingface.co/guineapig/purse-splitter-qwen3.5-9b">Hugging Face</a>.</p>
     <p>© 2026 Kunal Pai and Harshil Patel</p>
   </div>
 </footer>
